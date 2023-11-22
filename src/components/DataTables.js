@@ -62,7 +62,7 @@ const DataTables = React.memo(() => {
           <label htmlFor="csvFileInput" className="cursor-pointer ml-auto">
             <div className="flex items-center">
               <HiOutlineUpload size={24} className="text-pink-500" />
-              <span className="text-base sm:text-xl font-semibold text-pink-500 ml-1 sm:ml-2">
+              <span className="text-base sm:text-xl font-semibold text-white-500 ml-1 sm:ml-2">
                 Import
               </span>
             </div>

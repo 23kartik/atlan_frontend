@@ -104,13 +104,13 @@ const ResultDisplay = React.memo(() => {
     <div>
 <div className="tabs-container mb-4 space-x-4">
   <button
-    className={`tab-button ${activeTab === 'Output' ? 'active-tab' : ''}`}
+    className={`tab-button text-white ${activeTab === 'Output' ? 'active-tab' : ''}`}
     onClick={() => setActiveTab('Output')}
   >
     Output
   </button>
   <button
-    className={`tab-button ${activeTab === 'TableData' ? 'active-tab' : ''}`}
+    className={`tab-button text-white ${activeTab === 'TableData' ? 'active-tab' : ''}`}
     onClick={() => setActiveTab('TableData')}
   >
     Table Data

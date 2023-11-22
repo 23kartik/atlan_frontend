@@ -85,10 +85,16 @@ The project leverages **React**, a robust JavaScript library for building intera
 
 ## Ready to Dive In?
 
+### Deployed url
+
+
+
 Now that you've explored the depths of the **SQL Editor App**, grab the code, and let the SQL querying adventure begin:
 
 ```bash
-git clone https://github.com/your-username/sql-editor-app.git
+git clone git@github.com:23kartik/atlan_frontend.git
 cd sql-editor-app
 npm install
 npm start
+
+
