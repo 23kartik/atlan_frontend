@@ -9,8 +9,8 @@ const LazyResultDisplay = lazy(() => import('./components/ResultDisplay'));
 
 
 const App = () => {
-  const [savedQueries, setSavedQueries] = useState([]); // Store saved queries here
-  const [executedQueries, setExecutedQueries] = useState([]); // Store executed queries here
+  const [savedQueries, setSavedQueries] = useState([]); 
+  const [executedQueries, setExecutedQueries] = useState([]); 
 
 
   const [theme, setTheme] = useState(
@@ -24,7 +24,7 @@ const App = () => {
   };
 
 
-  const [selectedQuery, setSelectedQuery] = useState(''); // Store the selected query
+  const [selectedQuery, setSelectedQuery] = useState(''); 
 
   const handleSelectQuery = (query) => {
     setSelectedQuery(query);
@@ -33,11 +33,11 @@ const App = () => {
 
 
   const handleSaveQuery = (query) => {
-    setSavedQueries([...savedQueries, query]); // Update saved queries
+    setSavedQueries([...savedQueries, query]); 
   };
 
   const handleExecuteQuery = (query) => {
-    setExecutedQueries([...executedQueries, query]); // Update executed queries
+    setExecutedQueries([...executedQueries, query]); 
   };
 
   return (
@@ -53,28 +53,25 @@ const App = () => {
              
             />
             <div className="mt-4">
-              {/* Add 1rem vertical space */}
               <DataTables />
             </div>
             <div className="mt-4">
-              {/* Add 1rem vertical space */}
               <QueryHistory executedQueries={executedQueries} />
             </div>
             <div className="mt-4">
-              {/* Add 1rem vertical space */}
               <SavedQueries savedQueries={savedQueries}  />
             </div>
           </div>
         </div>
         <div className="w-3/4 p-4 mt-8">
-  {/* Right content */}
+
   <QueryEditor
     onSaveQuery={handleSaveQuery}
     onExecuteQuery={handleExecuteQuery}
     theme={theme}
     selectedQuery={selectedQuery}
   />
-  <div className="mt-4"> {/* Add vertical margin */}
+  <div className="mt-4"> 
   <Suspense fallback={<div>Loading...</div>}>
         <LazyResultDisplay />
       </Suspense>

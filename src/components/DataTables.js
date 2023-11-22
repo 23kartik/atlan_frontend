@@ -1,57 +1,54 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { HiDatabase, HiOutlineUpload } from 'react-icons/hi';
 import Papa from 'papaparse';
 import { useQueryContext } from './QueryContextProvider';
 
-const DataTables = () => {
-  const [selectedCsv, setSelectedCsv] = useState(null); // Initialize with null
+const DataTables = React.memo(() => {
+    const [selectedCsv, setSelectedCsv] = useState(null);
   const { setSelectedQuery } = useQueryContext();
   const tableNames = [
-    "categories",
-    "customers",
-    "dataOutput",
-    "employee_territories",
-    "employees",
-    "order_details",
-    "orders",
-    "products",
-    "regions",
-    "shippers",
-    "suppliers",
-    "territories"
+    'categories',
+    'customers',
+    'dataOutput',
+    'employee_territories',
+    'employees',
+    'order_details',
+    'orders',
+    'products',
+    'regions',
+    'shippers',
+    'suppliers',
+    'territories',
   ];
 
   const [importedData, setImportedData] = useState([]);
   const [importedCsvName, setImportedCsvName] = useState(null);
 
-  // Handle CSV selection
   const handleCsvSelection = (csvFileName) => {
     setSelectedCsv(csvFileName);
     setSelectedQuery(`SELECT * FROM ${csvFileName}`);
   };
+
   useEffect(() => {
-    handleCsvSelection(""); // Choose a default table here
+    handleCsvSelection(''); // Choose a default table here
   }, []); // Call it on component mount
 
   const handleCsvFileImport = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // Extract the file name without the ".csv" extension
       const fileName = file.name.replace('.csv', '');
 
       Papa.parse(file, {
         complete: (result) => {
-          // This will log the parsed CSV data to the console
           console.log('Parsed CSV Data:', result.data);
-          // Process the CSV data as needed
           setImportedData(result.data);
           setImportedCsvName(fileName);
           setSelectedCsv(fileName);
           setSelectedQuery(`SELECT * FROM ${fileName}`);
         },
-        header: true, // Assumes the first row is the header
+        header: true,
       });
-      // Set the selected CSV file name
+
       setSelectedCsv(fileName);
     }
   };
@@ -62,10 +59,12 @@ const DataTables = () => {
         <div className="flex items-center mb-4">
           <HiDatabase size={24} className="text-gray-600" />
           <h2 className="text-xl font-semibold ml-2">Data Tables</h2>
-          <label htmlFor="csvFileInput" className="cursor-pointer ml-4">
-            <div className="flex items-center ml-32">
-              <HiOutlineUpload size={24} className="text-pink-500" /> 
-              <span className="text-xl font-semibold text-pink-500">Import</span>
+          <label htmlFor="csvFileInput" className="cursor-pointer ml-auto">
+            <div className="flex items-center">
+              <HiOutlineUpload size={24} className="text-pink-500" />
+              <span className="text-base sm:text-xl font-semibold text-pink-500 ml-1 sm:ml-2">
+                Import
+              </span>
             </div>
           </label>
           <input
@@ -76,8 +75,8 @@ const DataTables = () => {
             onChange={handleCsvFileImport}
           />
         </div>
-        <ul className="pl-0 space-y-2 max-h-[12rem] overflow-y-auto">
-          {importedCsvName ? ( 
+        <ul className="pl-0 space-y-2 max-h-[12rem] sm:max-h-[16rem] overflow-y-auto">
+          {importedCsvName ? (
             <li
               className={`${
                 selectedCsv === importedCsvName
@@ -106,6 +105,6 @@ const DataTables = () => {
       </div>
     </div>
   );
-};
+});
 
 export default DataTables;

@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import Brightness4Icon from '@mui/icons-material/Brightness4'; // Import the dark mode icon
 import Paper from '@mui/material/Paper'; // Import Paper component from Material-UI
-import AddIcon from '@mui/icons-material/Add'; // Import the "+" icon
 
-const Navbar = ({ onNewQueryClick }) => {
+const Navbar = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light'
   );
@@ -27,9 +23,7 @@ const Navbar = ({ onNewQueryClick }) => {
     document.querySelector('html').setAttribute('data-theme', localTheme);
   }, [theme]);
 
-  const handleNewQueryButtonClick = () => {
-    onNewQueryClick();
-  };
+
 
   return (
     <AppBar position="static">
@@ -50,23 +44,7 @@ const Navbar = ({ onNewQueryClick }) => {
           </label>
         </div>
 
-        <Paper
-          variant="outlined"
-          square
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0px',
-            borderRadius: '10px',
-            border: '2px solid white',
-            backgroundColor: 'transparent',
-          }}
-        >
-          <IconButton color="inherit" onClick={handleNewQueryButtonClick}>
-            <AddIcon />
-          </IconButton>
-          <span className='mr-2'>New Query</span>
-        </Paper>
+  
       </Toolbar>
     </AppBar>
   );

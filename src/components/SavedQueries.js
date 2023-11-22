@@ -3,16 +3,16 @@ import { useQueryContext } from './QueryContextProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 
-const SavedQueries = ({ savedQueries }) => {
-  const { selectedQuery, setSelectedQuery } = useQueryContext();
+const SavedQueries = React.memo(({ savedQueries }) => {
+    const { selectedQuery, setSelectedQuery } = useQueryContext();
 
   return (
     <div className="saved-queries bg-white shadow-md p-4 rounded-lg">
       <h3 className="text-2xl font-semibold mb-4 flex items-center">
         <FontAwesomeIcon icon={faSave} className="text-green-600 mr-2" />
-        <h2 className="text-xl font-semibold ml-2"> Saved Queries</h2>
+        <h2 className="text-xl font-semibold ml-2">Saved Queries</h2>
       </h3>
-      <ul className="pl-0 space-y-2 max-h-[6rem] overflow-y-auto">
+      <ul className="pl-0 space-y-2 max-h-[6rem] md:max-h-[8rem] lg:max-h-[10rem] overflow-y-auto">
         {savedQueries.map((savedQuery, index) => (
           <li
             key={index}
@@ -27,6 +27,6 @@ const SavedQueries = ({ savedQueries }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default SavedQueries;

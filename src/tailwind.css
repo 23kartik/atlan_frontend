@@ -4,3 +4,30 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Improved color combination for a visually appealing look */
+
+/* Base color */
+:root {
+    --primary-color: #3498db; /* Change this to your preferred primary color */
+  }
+  
+  .tab-button {
+    padding: 10px 20px;
+    background: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.25rem;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .tab-button:hover {
+    background: #2980b9; /* Slightly darker shade on hover */
+    transform: scale(1.02);
+  }
+  
+  .active-tab {
+    background: #2c3e50; /* Darker shade for the active tab */
+    transform: scale(1.02);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  

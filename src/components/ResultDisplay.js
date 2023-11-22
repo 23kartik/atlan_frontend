@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faFileDownload } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useQueryContext } from './QueryContextProvider';
 
-const ResultDisplay = () => {
-  const { selectedQuery, isClicked, setIsClicked } = useQueryContext();
+const ResultDisplay = React.memo(() => {
+    const { selectedQuery, isClicked, setIsClicked } = useQueryContext();
+  const [activeTab, setActiveTab] = useState('Output');
   const [tableData, setTableData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // 5 rows per page
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(itemsPerPage);
-
-  const [csvData, setCsvData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -22,39 +22,45 @@ const ResultDisplay = () => {
     setEndIndex(itemsPerPage);
   }, [selectedQuery, setIsClicked]);
 
-  const fetchTableData = () => {
-    if (selectedQuery) {
-      const tableName = extractTableName(selectedQuery);
-      if (tableName) {
-        const csvFileName = `${tableName}.csv`;
+  useEffect(() => {
+    const fetchTableData = async () => {
+      if (selectedQuery) {
+        const tableName = extractTableName(selectedQuery);
+        if (tableName) {
+          const csvFileName = `${tableName}.csv`;
 
-        setLoading(true);
+          setLoading(true);
 
-        // Fetch data from the CSV file
-        fetch(`/data/${csvFileName}`)
-          .then((response) => {
+          try {
+            const response = await fetch(`/data/${csvFileName}`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-            return response.text();
-          })
-          .then((data) => {
-            if (csvData[0] !== data) {
-              setCsvData([data, parseCSVData(data)]);
-            }
+
+            const data = await response.text();
+            const parsedData = parseCSVData(data);
+
+            setTableData(parsedData);
             setErrorMessage([]);
-          })
-          .catch((error) => {
+          } catch (error) {
             setErrorMessage(['Error fetching data']);
-          })
-          .finally(() => {
+          } finally {
             setLoading(false);
-          });
-      } else {
-        setErrorMessage(['Invalid query. Please select a table']);
+          }
+        } else {
+          setErrorMessage(['Invalid query. Please select a table']);
+        }
       }
-    }
-  };
+    };
+
+    fetchTableData();
+  }, [selectedQuery]);
+
+  useEffect(() => {
+    // Update indices when page changes
+    setStartIndex((currentPage - 1) * itemsPerPage);
+    setEndIndex(currentPage * itemsPerPage);
+  }, [currentPage, itemsPerPage]);
 
   const extractTableName = (query) => {
     const tableNameMatch = query.match(/FROM\s+(\w+)/i);
@@ -80,54 +86,57 @@ const ResultDisplay = () => {
     return data;
   };
 
-  useEffect(() => {
-    fetchTableData();
-  }, [selectedQuery]);
-
   const handleNextPage = () => {
-    // Calculate the next page index
-    const nextPage = currentPage + 1;
-    setCurrentPage(nextPage);
-    setStartIndex((nextPage - 1) * itemsPerPage);
-    setEndIndex(nextPage * itemsPerPage);
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const handlePrevPage = () => {
-    // Calculate the previous page index
-    const prevPage = currentPage - 1;
-    setCurrentPage(prevPage);
-    setStartIndex((prevPage - 1) * itemsPerPage);
-    setEndIndex(prevPage * itemsPerPage);
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
-  const exportTableData = () => {
-    const csvContent = 'data:text/csv;charset=utf-8,' + csvData[0];
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', 'table_data.csv');
-    link.click();
-  };
+  const filteredTableData = tableData.filter((row) =>
+    Object.values(row).some((value) =>
+      value.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
   return (
-    <div className="result-display bg-gray-100 text-gray-800 p-4 rounded-lg shadow-lg">
-      {isClicked ? (
+    <div>
+<div className="tabs-container mb-4 space-x-4">
+  <button
+    className={`tab-button ${activeTab === 'Output' ? 'active-tab' : ''}`}
+    onClick={() => setActiveTab('Output')}
+  >
+    Output
+  </button>
+  <button
+    className={`tab-button ${activeTab === 'TableData' ? 'active-tab' : ''}`}
+    onClick={() => setActiveTab('TableData')}
+  >
+    Table Data
+  </button>
+</div>
+
+<div className="result-display bg-gray-100 text-gray-800 p-4 rounded-lg shadow-lg">
+  {isClicked ? (
+    <div>
+      {activeTab === 'Output' && (
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-3xl font-extrabold">Table Data</h2>
-            <button
-              onClick={exportTableData}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center transition-transform transform hover:scale-105"
-            >
-              Export <FontAwesomeIcon icon={faFileDownload} className="ml-2" />
-            </button>
+          <div className="search-filter-section mb-4">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="px-4 py-2 border rounded focus:outline-none w-full md:w-1/2"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
-          {csvData[1] && csvData[1].length > 0 ? (
+          {filteredTableData.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full bg-white rounded-lg shadow-lg">
                 <thead className="bg-blue-500 text-white">
                   <tr>
-                    {Object.keys(csvData[1][0]).map((key) => (
+                    {Object.keys(filteredTableData[0]).map((key) => (
                       <th className="p-3 text-lg font-semibold" key={key}>
                         {key}
                       </th>
@@ -135,7 +144,7 @@ const ResultDisplay = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {csvData[1].slice(startIndex, endIndex).map((row, rowIndex) => (
+                  {filteredTableData.slice(startIndex, endIndex).map((row, rowIndex) => (
                     <tr
                       key={rowIndex}
                       className={rowIndex % 2 === 0 ? 'bg-gray-200' : 'bg-gray-100'}
@@ -152,7 +161,7 @@ const ResultDisplay = () => {
             </div>
           ) : (
             <div className="no-data-message text-center mt-4 text-red-600">
-              No data available
+              No matching data found
             </div>
           )}
 
@@ -173,31 +182,55 @@ const ResultDisplay = () => {
             </span>
             <button
               className={`${
-                endIndex >= csvData[1].length
+                endIndex >= filteredTableData.length
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-blue-500 hover:bg-blue-600'
               } text-white font-semibold py-2 px-4 rounded-full shadow-md transition-transform transform hover:scale-105`}
               onClick={handleNextPage}
-              disabled={endIndex >= csvData[1].length}
+              disabled={endIndex >= filteredTableData.length}
             >
               Next
             </button>
           </div>
         </div>
+      )}
+{activeTab === 'TableData' && (
+  <div>
+    <h2 className="text-3xl font-extrabold mb-4">Table Headers</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {Object.keys(filteredTableData[0]).map((key, index) => (
+        <div
+          key={index}
+          className="bg-gray-300 bg-blur p-6 rounded-lg shadow-md"
+        >
+          <div className="text-xl font-semibold mb-2">{key}</div>
+          <div className="text-gray-700">
+            Data Type: {typeof filteredTableData[0][key]}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+      )}
+    </div>
+  ) : (
+    <div className="placeholder-message text-center">
+      {loading ? (
+        <FontAwesomeIcon icon={faPlay} className="play-icon text-5xl text-blue-500 mb-2" />
       ) : (
-        <div className="placeholder-message text-center">
-          {loading ? (
-            <FontAwesomeIcon icon={faPlay} className="play-icon text-5xl text-blue-500 mb-2" />
-          ) : (
-            <div>
-              <FontAwesomeIcon icon={faPlay} className="play-icon text-5xl text-blue-500 mb-2" />
-              <p className="placeholder-text text-2xl text-red-600">Run a query to display the data</p>
-            </div>
-          )}
+        <div>
+          <FontAwesomeIcon icon={faPlay} className="play-icon text-5xl text-blue-500 mb-2" />
+          <p className="placeholder-text text-2xl text-red-600">
+            Run a query to display the data
+          </p>
         </div>
       )}
     </div>
+  )}
+</div>
+</div>
+
   );
-};
+});
 
 export default ResultDisplay;
