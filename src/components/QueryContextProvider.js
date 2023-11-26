@@ -6,14 +6,11 @@ export const useQueryContext = () => {
   return useContext(QueryContext);
 };
 
-const QueryContextProvider = ({ children }) => {
+const QueryContextProvider = React.memo(({ children }) => {
   const [selectedQuery, setSelectedQuery] = useState('');
   const [isClicked, setIsClicked] = useState(false);
   const [importedData, setImportedData] = useState([]);
   const [importedCsvName, setImportedCsvName] = useState(null);
-  const [isImported, setIsImported] = useState(false);
-
-
 
   return (
     <QueryContext.Provider value={{
@@ -25,12 +22,10 @@ const QueryContextProvider = ({ children }) => {
       setImportedData,
       importedCsvName,
       setImportedCsvName,
-      isImported,
-      setIsImported
     }}>
       {children}
     </QueryContext.Provider>
   );
-};
+});
 
 export default QueryContextProvider;

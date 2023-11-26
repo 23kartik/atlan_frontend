@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { useQueryContext } from './QueryContextProvider';
 
-const QueryAvailable = () => {
+const QueryAvailable = React.memo(() => {
   const { setSelectedQuery, selectedQuery } = useQueryContext();
   const preloadedQueries = [
     'SELECT * FROM customers;',
@@ -47,6 +47,6 @@ const QueryAvailable = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default QueryAvailable;

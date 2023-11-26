@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Paper, Button, TextareaAutosize } from '@mui/material';
 import { useQueryContext } from './QueryContextProvider';
 
-const QueryEditor = ({ onSaveQuery, onExecuteQuery, theme }) => {
+const QueryEditor = React.memo(({ onSaveQuery, onExecuteQuery, theme }) => {
   const [query, setQuery] = useState('');
   const { selectedQuery, setSelectedQuery, setIsClicked } = useQueryContext();
 
@@ -113,6 +113,6 @@ const QueryEditor = ({ onSaveQuery, onExecuteQuery, theme }) => {
       </Grid>
     </Grid>
   )
-};
+});
 
 export default QueryEditor;

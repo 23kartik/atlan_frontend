@@ -4,7 +4,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useQueryContext } from './QueryContextProvider';
 
 const ResultDisplay = React.memo(() => {
-  const { selectedQuery, isClicked, setIsClicked,importedData,importedCsvName,isImported, setIsImported } = useQueryContext();
+  const { selectedQuery, isClicked, setIsClicked,importedData,importedCsvName} = useQueryContext();
   const [activeTab, setActiveTab] = useState('Output');
   const [tableData, setTableData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');

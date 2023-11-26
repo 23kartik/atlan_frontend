@@ -3,9 +3,9 @@ import { HiDatabase, HiOutlineUpload } from 'react-icons/hi';
 import Papa from 'papaparse';
 import { useQueryContext } from './QueryContextProvider';
 
-const DataTables = () => {
-    const [selectedCsv, setSelectedCsv] = useState(null);
-    const { setSelectedQuery, setImportedData, setImportedCsvName,importedCsvName,isImported, setIsImported } = useQueryContext();
+const DataTables = React.memo(() => {
+  const [selectedCsv, setSelectedCsv] = useState(null);
+    const { setSelectedQuery, setImportedData, setImportedCsvName,importedCsvName, } = useQueryContext();
     const tableNames = [
     'categories',
     'customers',
@@ -35,7 +35,6 @@ const DataTables = () => {
 
   const handleCsvFileImport = (event) => {
     const file = event.target.files[0];
-    setIsImported(true);
     if (file) {
       const fileName = file.name.replace('.csv', '');
   
@@ -108,6 +107,6 @@ const DataTables = () => {
       </div>
     </div>
   );
-};
+});
 
 export default DataTables;
