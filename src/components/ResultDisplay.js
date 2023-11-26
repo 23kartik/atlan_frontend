@@ -87,6 +87,14 @@ const ResultDisplay = React.memo(() => {
     return data;
   };
 
+  const exportTableData = () => {
+    const csvContent = 'data:text/csv;charset=utf-8,' + tableData[0];
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'table_data.csv');
+    link.click();
+  };
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -126,15 +134,26 @@ className={`tab-button  ${activeTab === 'TableData' ? 'active-tab' : ''}`}
     <div>
       {activeTab === 'Output' && (
         <div>
-          <div className="search-filter-section mb-4">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="px-4 py-2 border rounded focus:outline-none w-full md:w-1/2"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+          <div className="search-filter-section mb-4 flex justify-between ">
+  <div className="mr-2">
+    <input
+      type="text"
+      placeholder="Search..."
+      className="px-4 py-2 border rounded focus:outline-none w-full "
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+  </div>
+  <div>
+    <button
+      className="bg-green-500 text-white font-semibold py-2 px-4 rounded-full shadow-md transition-transform transform hover:scale-105"
+      onClick={exportTableData}
+    >
+      Export
+    </button>
+  </div>
+</div>
+        
           {filteredTableData.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full bg-white rounded-lg shadow-lg">
