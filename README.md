@@ -42,6 +42,22 @@ The project leverages **React**, a robust JavaScript library for building intera
 
 - **PapaParse:** A crucial player in asynchronous CSV file parsing, PapaParse significantly improves the handling of file imports in the DataTables component.
 
+## Page Load Time Measurement
+
+The page load time of the SQL Editor App was assessed using Lighthouse, a powerful tool for performance analysis. The measurements include the time it takes for the application to load and become interactive.
+
+To reproduce the page load time measurement:
+
+1. Open Google Chrome or any Chromium-based browser.
+2. Navigate to your deployed SQL Editor App: [SQL Editor App](https://atlan-frontend-red.vercel.app/).
+3. Right-click on the page, select "Inspect," and navigate to the "Lighthouse" tab.
+
+Run a Lighthouse performance audit, and note the reported metrics, including:
+
+- **First Contentful Paint (FCP):** The time it takes for the first content to be painted on the screen.
+- **Speed Index:** A measure of how quickly the contents of a page are visibly populated.
+- **Time to Interactive (TTI):** The time it takes for the page to become fully interactive.
+
 ## Performance Optimizations
 
 1. **Code Splitting for Dynamic Loading:**

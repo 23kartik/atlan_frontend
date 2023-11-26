@@ -39,7 +39,7 @@ const ResultDisplay = React.memo(() => {
 
             const data = await response.text();
             const parsedData = parseCSVData(data);
-
+            console.log(parsedData);
             setTableData(parsedData);
             setErrorMessage([]);
           } catch (error) {
