@@ -4,7 +4,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useQueryContext } from './QueryContextProvider';
 
 const ResultDisplay = React.memo(() => {
-    const { selectedQuery, isClicked, setIsClicked } = useQueryContext();
+  const { selectedQuery, isClicked, setIsClicked,importedData,importedCsvName,isImported, setIsImported } = useQueryContext();
   const [activeTab, setActiveTab] = useState('Output');
   const [tableData, setTableData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,36 +22,41 @@ const ResultDisplay = React.memo(() => {
   }, [selectedQuery, setIsClicked]);
 
   useEffect(() => {
-    const fetchTableData = async () => {
-      if (selectedQuery) {
-        const tableName = extractTableName(selectedQuery);
-        if (tableName) {
-          const csvFileName = `${tableName}.csv`;
+    if (importedData.length > 0 && selectedQuery === `SELECT * FROM ${importedCsvName}`) {
+      setTableData(importedData);
+      return;
+    }
+    
+      // Fetch data for other queries
+      const fetchTableData = async () => {
+        if (selectedQuery) {
+          const tableName = extractTableName(selectedQuery);
 
-          setLoading(true);
+          if (tableName) {
+            const csvFileName = `${tableName}.csv`;
+            setLoading(true);
 
-          try {
-            const response = await fetch(`/data/${csvFileName}`);
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
+            try {
+              const response = await fetch(`/data/${csvFileName}`);
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+
+              const data = await response.text();
+              const parsedData = parseCSVData(data);
+              setTableData(parsedData);
+            } catch (error) {
+              // Handle error if needed
+            } finally {
+              setLoading(false);
             }
-
-            const data = await response.text();
-            const parsedData = parseCSVData(data);
-            console.log(parsedData);
-            setTableData(parsedData);
-            
-          } catch (error) {
-          } finally {
-            setLoading(false);
           }
-        } else {
         }
-      }
-    };
+      };
 
-    fetchTableData();
-  }, [selectedQuery]);
+      fetchTableData();
+    
+  }, [selectedQuery, importedCsvName, importedData]);
 
   useEffect(() => {
     setStartIndex((currentPage - 1) * itemsPerPage);

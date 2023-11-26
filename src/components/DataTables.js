@@ -3,10 +3,10 @@ import { HiDatabase, HiOutlineUpload } from 'react-icons/hi';
 import Papa from 'papaparse';
 import { useQueryContext } from './QueryContextProvider';
 
-const DataTables = React.memo(() => {
+const DataTables = () => {
     const [selectedCsv, setSelectedCsv] = useState(null);
-  const { setSelectedQuery } = useQueryContext();
-  const tableNames = [
+    const { setSelectedQuery, setImportedData, setImportedCsvName,importedCsvName,isImported, setIsImported } = useQueryContext();
+    const tableNames = [
     'categories',
     'customers',
     'dataOutput',
@@ -21,28 +21,30 @@ const DataTables = React.memo(() => {
     'territories',
   ];
 
-  const [importedData, setImportedData] = useState([]);
-  const [importedCsvName, setImportedCsvName] = useState(null);
+
 
   const handleCsvSelection = (csvFileName) => {
     setSelectedCsv(csvFileName);
     setSelectedQuery(`SELECT * FROM ${csvFileName}`);
+
   };
 
   useEffect(() => {
-    handleCsvSelection(''); // Choose a default table here
-  }, [handleCsvSelection]); // Call it on component mount
+    handleCsvSelection(''); 
+  }, []); // Call it on component mount
 
   const handleCsvFileImport = (event) => {
     const file = event.target.files[0];
+    setIsImported(true);
     if (file) {
       const fileName = file.name.replace('.csv', '');
-
+  
       Papa.parse(file, {
         complete: (result) => {
-          console.log('Parsed CSV Data:', result.data);
+        
           setImportedData(result.data);
           setImportedCsvName(fileName);
+  
           setSelectedCsv(fileName);
           setSelectedQuery(`SELECT * FROM ${fileName}`);
         },
@@ -52,6 +54,7 @@ const DataTables = React.memo(() => {
       setSelectedCsv(fileName);
     }
   };
+  
 
   return (
     <div className="data-tables">
@@ -105,6 +108,6 @@ const DataTables = React.memo(() => {
       </div>
     </div>
   );
-});
+};
 
 export default DataTables;

@@ -1,19 +1,20 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './tailwind.css';
-import  QueryContextProvider  from './components/QueryContextProvider';
-import reportWebVitals from './reportWebVitals';
+import App from './App';
+import  QueryContextProvider  from './components/QueryContextProvider'; // Import the context provider
 
-const App = lazy(() => import('./App'));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-    <QueryContextProvider>
-      <Suspense fallback={<div>Loading...</div>}>
-        <App />
-      </Suspense>
-    </QueryContextProvider>
-  // </React.StrictMode>
+  <React.StrictMode>
+     <QueryContextProvider>
+     <App />
+     </QueryContextProvider>
+   
+  </React.StrictMode>
 );
-reportWebVitals(console.log);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
