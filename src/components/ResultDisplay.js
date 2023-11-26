@@ -10,7 +10,7 @@ const ResultDisplay = React.memo(() => {
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // 5 rows per page
+  const itemsPerPage = 5; 
   const [startIndex, setStartIndex] = useState(0);
   const [endIndex, setEndIndex] = useState(itemsPerPage);
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,6 @@ const ResultDisplay = React.memo(() => {
   }, [selectedQuery]);
 
   useEffect(() => {
-    // Update indices when page changes
     setStartIndex((currentPage - 1) * itemsPerPage);
     setEndIndex(currentPage * itemsPerPage);
   }, [currentPage, itemsPerPage]);
@@ -104,13 +103,15 @@ const ResultDisplay = React.memo(() => {
     <div>
 <div className="tabs-container mb-4 space-x-4">
   <button
-    className={`tab-button text-black ${activeTab === 'Output' ? 'active-tab' : ''}`}
+
+    className={`tab-button  ${activeTab === 'Output' ? 'active-tab' : ''}`}
     onClick={() => setActiveTab('Output')}
   >
     Output
   </button>
   <button
-    className={`tab-button text-white bg-blue-500 ${activeTab === 'TableData' ? 'active-tab' : ''}`}
+
+className={`tab-button  ${activeTab === 'TableData' ? 'active-tab' : ''}`}
     onClick={() => setActiveTab('TableData')}
   >
     Table Data
