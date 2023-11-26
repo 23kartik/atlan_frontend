@@ -31,7 +31,7 @@ const DataTables = React.memo(() => {
 
   useEffect(() => {
     handleCsvSelection(''); // Choose a default table here
-  }, []); // Call it on component mount
+  }, [handleCsvSelection]); // Call it on component mount
 
   const handleCsvFileImport = (event) => {
     const file = event.target.files[0];

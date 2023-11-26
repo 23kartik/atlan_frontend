@@ -54,7 +54,7 @@ const QueryEditor = React.memo(({ onSaveQuery, onExecuteQuery, theme }) => {
         >
           <div className='w-full md:w-2/3 lg:w-3/4 xl:w-2/3 2xl:w-1/2 mb-4 md:mb-0 '>
             <TextareaAutosize
-              rowsMin={10}
+              rows={10}
               value={query}
               onChange={(e) => setSelectedQuery(e.target.value)}
               placeholder="Enter your SQL query"

@@ -8,7 +8,6 @@ const ResultDisplay = React.memo(() => {
   const [activeTab, setActiveTab] = useState('Output');
   const [tableData, setTableData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [errorMessage, setErrorMessage] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; 
   const [startIndex, setStartIndex] = useState(0);
@@ -41,14 +40,12 @@ const ResultDisplay = React.memo(() => {
             const parsedData = parseCSVData(data);
             console.log(parsedData);
             setTableData(parsedData);
-            setErrorMessage([]);
+            
           } catch (error) {
-            setErrorMessage(['Error fetching data']);
           } finally {
             setLoading(false);
           }
         } else {
-          setErrorMessage(['Invalid query. Please select a table']);
         }
       }
     };

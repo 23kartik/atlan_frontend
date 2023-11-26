@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper'; // Import Paper component from Material-UI
 
 const Navbar = () => {
   const [theme, setTheme] = useState(
