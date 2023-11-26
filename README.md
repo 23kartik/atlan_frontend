@@ -86,7 +86,7 @@ The project leverages **React**, a robust JavaScript library for building intera
 ## Ready to Dive In?
 
 ### Deployed url
-
+https://atlan-frontend-red.vercel.app/
 
 
 Now that you've explored the depths of the **SQL Editor App**, grab the code, and let the SQL querying adventure begin:
@@ -96,5 +96,7 @@ git clone git@github.com:23kartik/atlan_frontend.git
 cd sql-editor-app
 npm install
 npm start
+
+
 
 
