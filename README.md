@@ -99,6 +99,30 @@ Run a Lighthouse performance audit, and note the reported metrics, including:
 13. **File Import Handling Optimization:**
     - Optimized the handling of CSV file imports using asynchronous parsing with PapaParse in the `DataTables` component, ensuring a smooth user experience.
 
+    ## Future Scope: Intelligent Query Assistance
+
+### 1. Debouncing for Real-Time Optimization
+Implement debouncing in the *QueryEditor* for seamless real-time query suggestions without impacting performance.
+
+### 2. OpenAI Integration for Smart Suggestions
+Integrate OpenAI for context-aware and well-phrased query recommendations as users type, enhancing readability and syntactic accuracy.
+
+### 3. Key Features
+   - **Natural Language Assistance:** Simplify complex queries with natural language suggestions.
+   - **Syntax Enhancement:** Ensure syntactic correctness and adherence to best practices.
+   - **Context-Aware Suggestions:** Tailor recommendations based on the specific dataset.
+   - **Query Refinement Assistance:** Provide alternative wording and optimization insights.
+
+### 4. User Customization and Feedback
+Allow users to customize OpenAI suggestions and provide feedback for continuous improvement.
+
+### 5. Privacy and Security Measures
+Implement robust measures to ensure the privacy and security of user queries processed by OpenAI.
+
+### 6. Continuous Model Updates
+Enable regular updates of integrated OpenAI models to stay at the forefront of language processing advancements.
+
+
 ## Ready to Dive In?
 
 ### Deployed url
