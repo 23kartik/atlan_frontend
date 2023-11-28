@@ -52,11 +52,18 @@ To reproduce the page load time measurement:
 2. Navigate to your deployed SQL Editor App: [SQL Editor App](https://atlan-frontend-red.vercel.app/).
 3. Right-click on the page, select "Inspect," and navigate to the "Lighthouse" tab.
 
-Run a Lighthouse performance audit, and note the reported metrics, including:
+Run a Lighthouse performance audit, and note the reported metr
+ics, including:
 
 - **First Contentful Paint (FCP):** The time it takes for the first content to be painted on the screen.
 - **Speed Index:** A measure of how quickly the contents of a page are visibly populated.
 - **Time to Interactive (TTI):** The time it takes for the page to become fully interactive.
+
+<img width="1440" alt="Screenshot 2023-11-27 at 2 34 31 AM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/c787ca29-887f-48ce-acca-98b03d802fbb">
+<img width="1440" alt="Screenshot 2023-11-27 at 2 34 22 AM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/584e5b58-4225-4203-bee0-23f0007c159f">
+<img width="1440" alt="Screenshot 2023-11-27 at 2 34 19 AM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/84b2e4ba-c434-4c70-85d7-f3b14942c877">
+<img width="1440" alt="Screenshot 2023-11-27 at 2 34 34 AM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/04dc43f7-a3d8-4329-b702-129d3a5ce929">
+<img width="1440" alt="Screenshot 2023-11-27 at 2 34 37 AM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/4e314296-891b-47f5-9abe-ade290d20d19">
 
 ## Performance Optimizations
 
@@ -136,6 +143,12 @@ git clone git@github.com:23kartik/atlan_frontend.git
 cd sql-editor-app
 npm install
 npm start
+```
+## Screenshots
+<img width="1440" alt="Screenshot 2023-11-28 at 5 37 32 PM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/f85c52c6-d5b1-4135-99a1-86830b85e06a">
+<img width="1440" alt="Screenshot 2023-11-28 at 5 37 45 PM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/5674d964-178a-438a-97f4-de96658dff99">
+<img width="1440" alt="Screenshot 2023-11-28 at 5 37 50 PM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/e6f75df5-9a2c-41d4-a769-e889b9d828f6">
+<img width="1440" alt="Screenshot 2023-11-28 at 5 38 04 PM" src="https://github.com/23kartik/atlan_frontend/assets/84660976/5412e394-498e-4448-8843-206a371f8069">
 
 
 
